@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+
+	<title>The Web is Transforming</title>
+	
+	<style type="text/css" media="screen">
+
+    #space {
+      margin-top: 100px;
+      height: 600px;
+      -webkit-perspective: 800;
+      -webkit-perspective-origin: 50% 200px;
+    }
+
+    .shape {
+      position: relative;
+      margin: 0 auto;
+      height: 400px;
+      width: 400px;
+      -webkit-transition: -webkit-transform 2s linear;
+      -webkit-transform-style: preserve-3d;
+    }
+
+    .shape .face {
+      -webkit-transition: opacity, -webkit-transform 2s linear;
+    }
+
+    .shape .face .content {
+      -webkit-transition: opacity 0.8s linear;
+    }
+
+    .cube .face,
+    .ring .face,
+    .rack .face .content {
+      position: absolute;
+      height: 360px;
+      width: 360px;
+      padding: 20px;
+      background-color: rgba(50, 50, 50, 0.7);
+      font-size: 27px;
+      line-height: 1em;
+      color: #fff;
+      border: 1px solid #555;
+      -webkit-border-radius: 3px;
+    }
+
+    /* Rack */
+
+    .rack .one  {
+      -webkit-transform: translateZ(200px);
+    }
+
+    .rack .two {
+      -webkit-transform: translateZ(-200px);
+    }
+
+    .rack .three {
+      -webkit-transform: translateZ(-600px);
+    }
+
+    .rack .four {
+      -webkit-transform: translateZ(-1000px);
+    }
+
+    .rack .five {
+      -webkit-transform: translateZ(-1400px);
+    }
+
+    .rack .six {
+      -webkit-transform: translateZ(-1800px) ;
+    }
+  
+    /* Cube */
+    
+    .cube .one  {
+      -webkit-transform: translateZ(200px);
+    }
+
+    .cube .two {
+      -webkit-transform: rotateY(90deg) translateZ(200px);
+    }
+
+    .cube .three {
+      -webkit-transform: rotateY(180deg) translateZ(200px);
+      
+    }
+
+    .cube .four {
+      -webkit-transform: rotateX(90deg) translateZ(200px);
+      
+    }
+
+    .cube .five {
+      -webkit-transform: rotateY(-90deg) translateZ(200px);
+    }
+
+    .cube .six {
+      -webkit-transform: rotateX(-90deg) rotate(180deg) translateZ(200px) ;
+    }
+    
+    /* Ring */
+    
+    .ring .one  {
+      -webkit-transform: translateZ(360px);
+    }
+
+    .ring .two {
+      -webkit-transform: rotateY(60deg) translateZ(360px);
+    }
+
+    .ring .three {
+      -webkit-transform: rotateY(120deg) translateZ(360px);
+      
+    }
+
+    .ring .four {
+      -webkit-transform: rotateY(180deg) translateZ(360px);
+      
+    }
+
+    .ring .five {
+      -webkit-transform: rotateY(240deg) translateZ(360px);
+    }
+
+    .ring .six {
+      -webkit-transform: rotateY(300deg) translateZ(360px) ;
+    }
+
+  </style>
+
+</head>
+
+<body>
+  
+  <div id="wrapper">
+  
+  	<h1>The Web is Transforming</h1>
+  	
+  	<p>You'll need a recent version of Safari if you want to play.</p>
+
+  	<div id="space">
+
+  		<div class="shape cube">
+	        <div class="face one">
+            <div class="content">Up, down, left, right, +, - and space.</div>
+	        </div>
+	        <div class="face two">
+            <div class="content">Things are going to get complicated</div>
+	        </div>
+	        <div class="face three">
+            <div class="content">How many sides does a page have?</div>
+	        </div>
+	        <div class="face four">
+            <div class="content">Where is the fold?</div>
+	        </div>
+	        <div class="face five">
+            <div class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+	        </div>
+	        <div class="face six">
+            <div class="content">Pew pew!</div>
+	        </div>
+	    </div>
+  	    
+  	</div>
+
+  </div>
+
+  <!-- // <script src="../common/jquery-1.4.2.min.js" charset="utf-8"></script> -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" charset="utf-8"></script>
+  <script type="text/javascript">
+
+    (function () {
+
+      var zAxis    = 0,
+          yAngle   = 0,
+          xAngle   = 0,
+          zAxisInc = 400,
+          pos      = 0,
+          maxPos   = 5,
+          yAngInt  = 90,
+
+      reset = function () {
+        zAxis    = 0;
+        yAngle   = 0;
+        xAngle   = 0;
+        zAxisInc = 400;
+        pos      = 0;
+        maxPos   = 5;
+        yAngInt  = 90;
+      },
+      
+      toggleShape = function () {
+         reset();
+         if ($('.shape').hasClass('rack')) {
+           $('.shape').removeClass('rack').addClass('ring');
+           yAngInt = 60;
+         } else if ($('.shape').hasClass('ring')) {
+           $('.shape').removeClass('ring').addClass('cube');
+         } else {
+           $('.shape').removeClass('cube').addClass('rack');
+         }
+       },
+
+      inputHandler = function (e) {
+
+        var transformation = "";
+
+        switch (e.keyCode) {
+
+          case 32: // space
+            toggleShape();
+            break;
+
+          case 37: // left
+            yAngle -= yAngInt;
+            break;
+
+          case 38: // up
+            xAngle += 90;
+            break;
+
+          case 39: // right
+            yAngle += yAngInt;
+            break;
+
+          case 40: // down
+            xAngle -= 90;
+            break;
+
+          case 189: // minus
+            if (pos > 0) {
+              zAxis -= zAxisInc;
+              pos -= 1;
+              $('.rack .face > div')[pos].style.opacity = "1";
+            }
+            break;
+
+          case 187: // plus
+            if (pos < maxPos) {          
+              zAxis += zAxisInc;
+              pos += 1;
+              $('.rack .face > div')[pos-1].style.opacity = "0";
+            }
+            break;
+
+          }
+
+        transformation = "translateZ(" + zAxis + "px)" +
+          " rotateX(" + xAngle + "deg)" +
+          " rotateY(" + yAngle + "deg)";
+
+        $('.shape')[0].style.webkitTransform = transformation;
+
+        e.preventDefault();
+
+      };
+
+      document.addEventListener('keydown', inputHandler, false);
+      
+    })();
+
+
+  </script>
+
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-UA-3059477-8']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+    })();
+
+  </script>
+
+</body>
+</html>
