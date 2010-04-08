@@ -3,7 +3,9 @@
 <head>
 	<meta charset="UTF-8" />
 
-	<title>Time machine</title>
+	<title>Time Machine</title>
+	
+  <link rel="stylesheet" href="time_machines.css" type="text/css" media="screen" title="no title" charset="utf-8">
 
 	<style type="text/css" media="screen">
 
@@ -12,43 +14,6 @@
 		font-family: Silkscreen, Helvetica, Arial, sans-serif;
 		background: -webkit-gradient(radial, 50% 0, 100, 50% 0, 500, from(#272727), to(#000));
 		height: 1000px;
-	}
-
-	/* Timemachine */
-
-	#space {
-		margin-top: 100px;
-		height: 600px;
-		-webkit-perspective: 800;
-		-webkit-perspective-origin: 50% 200px;
-	}
-
-	.stack {
-		position: relative;
-		margin: 0 auto;
-		height: 400px;
-		width: 400px;
-		-webkit-transition: -webkit-transform 2s linear;
-		-webkit-transform-style: preserve-3d;
-	}
-
-	.stack .card {
-		-webkit-transition: opacity, -webkit-transform 2s linear;
-	}
-
-	.stack .card .content {
-		position: absolute;
-		height: 360px;
-		width: 360px;
-		padding: 20px;
-		background-color: rgba(50, 50, 50, 0.7);
-		font-size: 27px;
-		line-height: 1em;
-		color: #fff;
-		-webkit-transition: opacity 0.8s linear;
-		border: 2px solid #222;
-		-webkit-border-radius: 10px;
-		margin: 10px 0;
 	}
 
 	.hasReflection {
@@ -104,28 +69,28 @@
 
 	<div id="wrapper">
 
-		<h1>Timemachine</h1>
+		<h1>Time Machine</h1>
 
 		<p>You'll need a recent version of Safari if you want to travel through time.</p>
 
-		<div id="space">
-			<div class="stack">
-					<div class="card">
+		<div class="time_machine">
+			<div class="history">
+					<div class="time">
 						<div class="content hasReflection">One one one</div>
 					</div>
-					<div class="card">
+					<div class="time">
 						<div class="content hasReflection">Two two two</div>
 					</div>
-					<div class="card">
+					<div class="time">
 						<div class="content hasReflection">Three three three</div>
 					</div>
-					<div class="card">
+					<div class="time">
 						<div class="content hasReflection">Four four four</div>
 					</div>
-					<div class="card">
+					<div class="time">
 						<div class="content hasReflection">Five five five</div>
 					</div>
-					<div class="card">
+					<div class="time">
 						<div class="content hasReflection">Six six six</div>
 					</div>
 			</div>
@@ -142,70 +107,28 @@
 
 	<script src="../common/jquery-1.4.2.min.js" charset="utf-8"></script>
 
+  <script src="time_machines.js" type="text/javascript" charset="utf-8"></script>
+
 	<script type="text/javascript">
 
-		(function () {
+    var myTimeMachine = TimeMachine.init({container: '.time_machine'});
 
-			var maxPos,
-					currentPos = 0,
-					division	 = 400,
-
-			setZ = function (el, z) {
-				$(el).css('webkitTransform', 'translateZ(' + z + 'px)');
-			},
-
-			distributeCards = function () {
-				$('.stack .card').each(function (i, card) {
-					setZ(card, -i * division);
-				});
-			},
-
-			move = function (pos) {
-				if (!validPos(pos)) {
-					return;
-				}
-				currentPos = pos;
-        $('.stack .card > div:eq(' + currentPos + ')').css('opacity', '1'); // TODO doesn't work if you move by more than 1
-				$('.stack .card > div:lt(' + currentPos + ')').css('opacity', '0');
-				setZ('.stack',	pos * division);
-			},
-
-			validPos = function (pos) {
-				return ((pos < 0) || (pos > maxPos)) ? false : true;
-			},
-
-			previous = function (pos) {
-				 move(currentPos - 1);
-			},
-
-			next = function (pos) {
-				 move(currentPos + 1);
-			},
-
-			inputHandler = function (e) {
-				switch (e.keyCode) {
-					case 189: // minus
-						previous();
-						e.preventDefault();
-						break;
-					case 187: // plus
-						next();
-						e.preventDefault();
-						break;
-				}
-			},
-
-			init = function () {
-				maxPos = $('.stack .card').length - 1;
-				$(document).keydown(inputHandler);
-				$('.next').click(next);
-				$('.previous').click(previous);
-				distributeCards();
-			};
-
-			init();
-
-		})();
+    var inputHandler = function (e) {
+     switch (e.keyCode) {
+       case 189: // minus
+         myTimeMachine.previous();
+         e.preventDefault();
+         break;
+       case 187: // plus
+         myTimeMachine.next();
+         e.preventDefault();
+         break;
+     }
+    };
+    
+    $(document).keydown(inputHandler);
+    $('.next').click(myTimeMachine.next);
+    $('.previous').click(myTimeMachine.previous);
 
 	</script>
 
