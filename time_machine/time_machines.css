@@ -1,0 +1,48 @@
+/* Time Machine */
+
+.time_machine {
+	-webkit-perspective: 800;
+	-webkit-perspective-origin: 50% -50px;
+}
+
+.history {
+	position: relative;
+	margin: 0 auto;
+	-webkit-transition: all 2s linear;
+	-webkit-transform-style: preserve-3d;
+}
+
+.history .time {
+	-webkit-transition: all 2s linear;
+}
+
+.history .time .content {
+	position: absolute;
+	-webkit-transition: all 0.8s linear;
+}
+
+/* Customisations */
+
+.time_machine {
+	margin-top: 100px;
+	height: 600px;
+}
+
+.history {
+	height: 400px;
+	width: 400px;
+}
+
+.history .time .content {
+	height: 360px;
+	width: 360px;
+	padding: 20px;
+	background-color: rgb(50, 50, 50);
+/*  opacity: 0.7;*/
+	font-size: 27px;
+	line-height: 1em;
+	color: #fff;
+	border: 2px solid #222;
+	margin: 10px 0;
+	-webkit-border-radius: 10px;
+}
