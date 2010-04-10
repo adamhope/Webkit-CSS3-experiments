@@ -5,7 +5,7 @@
 
 	<title>Time Machine</title>
 	
-  <link rel="stylesheet" href="time_machines.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="timemachines.css" type="text/css" media="screen" charset="utf-8" />
 
 	<style type="text/css" media="screen">
 
@@ -106,29 +106,12 @@
 	</div>
 
 	<script src="../common/jquery-1.4.2.min.js" charset="utf-8"></script>
-
-  <script src="time_machines.js" type="text/javascript" charset="utf-8"></script>
+	
+  <script src="jquery.timemachine.js" type="text/javascript" charset="utf-8"></script>
 
 	<script type="text/javascript">
 
-    $('.time_machine').timeTravel();
-
-    // var inputHandler = function (e) {
-    //      switch (e.keyCode) {
-    //        case 189: // minus
-    //          myTimeMachine.previous();
-    //          e.preventDefault();
-    //          break;
-    //        case 187: // plus
-    //          myTimeMachine.next();
-    //          e.preventDefault();
-    //          break;
-    //      }
-    //     };
-    //     
-    //     $(document).keydown(inputHandler);
-    //     $('.next').click(myTimeMachine.next);
-    //     $('.previous').click(myTimeMachine.previous);
+    $('.time_machine').timeMachine();
 
 	</script>
 
