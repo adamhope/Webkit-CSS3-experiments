@@ -1,58 +1,75 @@
-var TimeMachine = (function () {
+(function ($) {
 
-	var maxPos,
-			currentPos = 0,
-			division	 = 400,
-			container,
+  $.fn.timeTravel = function(options){
 
-  setMaxPos = function () {
-     maxPos = $('.history .time', container).length - 1;
-  },
+    // var options = $.extend(defaults, options);
 
-	setZ = function (el, z) {
-		$(el).css('webkitTransform', 'translateZ(' + z + 'px)');
-	},
+  	var maxPos,
+  			currentPos = 0,
+  			division	 = 400,
+        element    = this,
 
-	distributeCards = function () {
-		$('.history .time', container).each(function (i, card) {
-			setZ(card, -i * division);
-		});
-	},
+    setMaxPos = function () {
+       maxPos = $('.history .time', element).length - 1;
+    },
 
-	move = function (pos) {
-		if (!validPos(pos)) {
-			return;
-		}
-		currentPos = pos;
-    $('.history .time > div:eq(' + currentPos + ')', container).css('opacity', '1'); // TODO doesn't work if you move by more than 1
-		$('.history .time > div:lt(' + currentPos + ')', container).css('opacity', '0');
-		setZ('.history',	pos * division);
-	},
+  	setZ = function (el, z) {
+  		$(el).css('webkitTransform', 'translateZ(' + z + 'px)');
+  	},
 
-	validPos = function (pos) {
-		return ((pos < 0) || (pos > maxPos)) ? false : true;
-	},
+  	distributeCards = function () {
+  		$('.history .time', element).each(function (i, card) {
+  			setZ(card, -i * division);
+  		});
+  	},
 
-	previous = function (pos) {
-		 move(currentPos - 1);
-	},
+  	move = function (pos) {
+  		if (!validPos(pos)) {
+  			return;
+  		}
+  		currentPos = pos;
+      $('.history .time > div:eq(' + currentPos + ')', element).css('opacity', '1'); // TODO doesn't work if you move by more than 1
+  		$('.history .time > div:lt(' + currentPos + ')', element).css('opacity', '0');
+  		setZ('.history',	pos * division);
+  	},
 
-	next = function (pos) {
-		 move(currentPos + 1);
-	},
+  	validPos = function (pos) {
+  		return ((pos < 0) || (pos > maxPos)) ? false : true;
+  	},
 
-  return {
+  	previous = function (pos) {
+  		 move(currentPos - 1);
+  	},
 
-		init: function (opts) {
-		  container = opts.container;
-		  setMaxPos();
-			distributeCards();
-			return {
-			  next: next,
-			  previous: previous
-			}
-		}
+  	next = function (pos) {
+  		 move(currentPos + 1);
+  	},
 	
-	}
+    inputHandler = function (e) {
+       switch (e.keyCode) {
+         case 189: // minus
+           previous();
+           e.preventDefault();
+           break;
+         case 187: // plus
+           next();
+           e.preventDefault();
+           break;
+       }
+      };
+    
+    $(element).each(function () {
 
-}());
+  	  setMaxPos();
+  		distributeCards();
+      $(document).keydown(inputHandler);
+
+      return {
+        next: next,
+        previous: previous
+      }
+
+    });
+  };
+
+}(jQuery));

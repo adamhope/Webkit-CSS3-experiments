@@ -111,24 +111,24 @@
 
 	<script type="text/javascript">
 
-    var myTimeMachine = TimeMachine.init({container: '.time_machine'});
+    $('.time_machine').timeTravel();
 
-    var inputHandler = function (e) {
-     switch (e.keyCode) {
-       case 189: // minus
-         myTimeMachine.previous();
-         e.preventDefault();
-         break;
-       case 187: // plus
-         myTimeMachine.next();
-         e.preventDefault();
-         break;
-     }
-    };
-    
-    $(document).keydown(inputHandler);
-    $('.next').click(myTimeMachine.next);
-    $('.previous').click(myTimeMachine.previous);
+    // var inputHandler = function (e) {
+    //      switch (e.keyCode) {
+    //        case 189: // minus
+    //          myTimeMachine.previous();
+    //          e.preventDefault();
+    //          break;
+    //        case 187: // plus
+    //          myTimeMachine.next();
+    //          e.preventDefault();
+    //          break;
+    //      }
+    //     };
+    //     
+    //     $(document).keydown(inputHandler);
+    //     $('.next').click(myTimeMachine.next);
+    //     $('.previous').click(myTimeMachine.previous);
 
 	</script>
 
